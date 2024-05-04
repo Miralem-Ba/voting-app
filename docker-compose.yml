@@ -1,0 +1,26 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    container_name: my_redis
+  db:
+    image: postgres:9.4
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  vote:
+    build: ./vote
+    ports:
+      - "5000:80"
+  worker:
+    build: ./worker
+  result:
+    build: ./result
+    ports:
+      - "5001:80"
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
